@@ -4,6 +4,7 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     "BurntSushi/ripgrep",
+    "luc-tielen/telescope_hoogle",
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }       -- "nvim-tree/nvim-web-devicons",
   },
   config = function()
@@ -25,6 +26,7 @@ return {
 
 
     telescope.load_extension("fzf")
+    telescope.load_extension("hoogle")
     -- print("loaded extension for telescope")
 
     -- set keymaps

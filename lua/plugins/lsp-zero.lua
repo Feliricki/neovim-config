@@ -52,7 +52,7 @@ return {
           ['<C-n>'] = cmp.mapping.select_next_item({ behavior = 'select' }),
           ['<C-y>'] = cmp.mapping.confirm({ select = true }),
           ['<C-Space>'] = cmp.mapping.complete(),
-          
+
           -- ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           -- ['<C-d>'] = cmp.mapping.scroll_docs(4),
           -- ['<C-f>'] = cmp_action.luasnip_jump_forward(),
@@ -74,6 +74,43 @@ return {
   {
     "lvimuser/lsp-inlayhints.nvim",
   },
+  -- folding
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = {
+      { 'kevinhwang91/promise-async' }
+    },
+
+    config = function()
+      vim.o.foldcolumn = '1'
+      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+
+      require('ufo').setup()
+
+      -- Using ufo provider need remap `zR` and `zM`.
+      vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+      vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+
+      local lsp_zero = require('lsp-zero')
+
+      lsp_zero.on_attach(function(client, bufnr)
+        lsp_zero.default_keymaps({ buffer = bufnr })
+      end)
+
+      lsp_zero.set_server_config({
+        capabilities = {
+          textDocument = {
+            foldingRange = {
+              dynamicRegistration = false,
+              lineFoldingOnly = true
+            }
+          }
+        }
+      })
+    end
+  },
   -- LSP
   {
     'neovim/nvim-lspconfig',
@@ -94,13 +131,27 @@ return {
       lsp_zero.on_attach(function(client, bufnr)
         -- see :help lsp-zero-keybindings
         -- to learn the available actions
-        lsp_zero.default_keymaps({ buffer = bufnr })
-        -- lsp_zero.default_setup({})
+
+        lsp_zero.default_keymaps({
+          buffer = bufnr,
+          preserve_mappings = false,
+          -- exclude = { "gi", "go", "gs" }
+        })
         -- if the client support formatting then the autoformat configs are applied
         if client.supports_method('textDocument/formatting') then
           require('lsp-format').on_attach(client)
+        else
+          vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
         end
       end)
+
+      lsp_zero.set_sign_icons({
+        error = '✘',
+        warn = '▲',
+        hint = '⚑',
+        info = '»'
+      })
+
       -- example on setting up the lsp server for lua
       -- local lua_opts = lsp_zero.nvim_lua_ls()
       -- require('lspconfig').lua_ls.setup(lua_opts)

@@ -30,3 +30,6 @@ opt.isfname:append("@-@")
 
 opt.updatetime = 50
 opt.colorcolumn = "80"
+
+-- opt.list = true
+-- opt.listchars = { leadmultispace = "| ", multispace = "|", tab = "|"}
