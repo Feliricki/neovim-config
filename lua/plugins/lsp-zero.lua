@@ -13,6 +13,13 @@ return {
     -- end,
   },
   {
+	"L3MON4D3/LuaSnip",
+	-- follow latest release.
+	version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+	-- install jsregexp (optional!).
+	build = "make install_jsregexp"
+},
+  {
     'williamboman/mason.nvim',
     lazy = false,
     config = true,
@@ -137,12 +144,13 @@ return {
           preserve_mappings = false,
           -- exclude = { "gi", "go", "gs" }
         })
+        -- NOTE: Uncomment the following to enable format on save.
         -- if the client support formatting then the autoformat configs are applied
-        if client.supports_method('textDocument/formatting') then
-          require('lsp-format').on_attach(client)
-        else
-          vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-        end
+        -- if client.supports_method('textDocument/formatting') then
+        --   require('lsp-format').on_attach(client)
+        -- else
+        --   vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+        -- end
       end)
 
       lsp_zero.set_sign_icons({

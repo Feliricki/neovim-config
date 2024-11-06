@@ -1,3 +1,4 @@
+-- This is a plugin for some git integration.
 return {
   'tpope/vim-fugitive',
   config = function ()

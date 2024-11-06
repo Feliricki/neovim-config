@@ -4,6 +4,6 @@ return {
     'nvim-lua/plenary.nvim',
     'ndmitchell/hoogle'
   },
-  version = '^2', -- Recommended
+  version = '^4', -- Recommended
   ft = { 'haskell', 'lhaskell', 'cabal', 'cabalproject' },
 }

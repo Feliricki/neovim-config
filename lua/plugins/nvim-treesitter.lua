@@ -14,7 +14,6 @@ return {
         indent = { enable = true },
         autotag = { enable = true },
         ensure_installed = {
-          "rust",
           "json",
           "javascript",
           "typescript",
@@ -32,6 +31,7 @@ return {
           "bash",
           "lua",
           "vim",
+          "vimdoc",
           "dockerfile",
           "gitignore",
           "query",},
