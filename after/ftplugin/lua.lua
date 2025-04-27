@@ -1,11 +1,3 @@
-local ih = require('lsp-inlayhints')
-ih.setup()
-
-local lsp_zero = require('lsp-zero')
-
-lsp_zero.on_attach(function(client, bufnr)
-  lsp_zero.default_keymaps({ buffer = bufnr })
-end)
 
 require 'lspconfig'.lua_ls.setup {
   on_init = function(client)
@@ -36,11 +28,6 @@ require 'lspconfig'.lua_ls.setup {
     end
     return true
   end,
-
-  on_attach = function(client, bufnr)
-    ih.on_attach(client, bufnr)
-  end,
-
   settings = {
     Lua = {
       hint = {
