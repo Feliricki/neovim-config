@@ -23,37 +23,37 @@ require("lazy").setup({
 vim.o.completeopt = "menu,noinsert,popup,fuzzy"
 
 -- Custom Keymaps
--- vim.api.nvim_create_autocmd('LspAttach', {
---   callback = function(args)
---     -- NOTE:This event is an uknown variable
---     -- local opts = {buffer = event.buf}
---         -- vim.keymap.set('n', '<C-Space>', '<C-x><C-o>', opts)
---         -- vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
---         -- vim.keymap.set('n', '<F-3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
---         -- vim.keymap.set('n', '<C-q>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
---
---     -- vim.keymap.set('n', 'grt', '<cmd>lua vim.lsp.buf.type_definition()<cr>',
---         -- opts) vim.keymap.set('n', 'grd', '<cmd>lua
---         -- vim.lsp.buf.declaration()<cr>', opts)
---   end,
--- })
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+        -- NOTE:This event is an uknown variable
+        -- local opts = {buffer = event.buf}
+        -- vim.keymap.set('n', '<C-Space>', '<C-x><C-o>', opts)
+        -- vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+        vim.keymap.set('n', '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', vim.opts)
+        -- vim.keymap.set('n', '<C-q>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+
+        -- vim.keymap.set('n', 'grt', '<cmd>lua vim.lsp.buf.type_definition()<cr>',
+        -- opts) vim.keymap.set('n', 'grd', '<cmd>lua
+        -- vim.lsp.buf.declaration()<cr>', opts)
+    end,
+})
 
 
 -- Format On Save
-vim.api.nvim_create_autocmd('LspAttach', {
-    callback = function(args)
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-        if client:supports_method('textDocument/formatting') then
-            vim.api.nvim_create_autocmd('BufWritePre', {
-                buffer = args.buf,
-                callback = function()
-                    vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-                end,
-            })
-        end
-    end,
-})
+-- vim.api.nvim_create_autocmd('LspAttach', {
+--     callback = function(args)
+--         local client = vim.lsp.get_client_by_id(args.data.client_id)
+--
+--         if client:supports_method('textDocument/formatting') then
+--             vim.api.nvim_create_autocmd('BufWritePre', {
+--                 buffer = args.buf,
+--                 callback = function()
+--                     vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+--                 end,
+--             })
+--         end
+--     end,
+-- })
 
 -- Enable Inlay-hints
 vim.api.nvim_create_autocmd('LspAttach', {
